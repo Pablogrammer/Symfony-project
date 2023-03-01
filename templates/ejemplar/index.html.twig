@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ejemplar index{% endblock %}
+
+{% block body %}
+    <h1>Lista de Ejemplares</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>T&iacute;tulo</th>
+                <th>Estado</th>
+                <th>Estanteria</th>
+                <th>Edicion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ejemplar in ejemplars %}
+            <tr>
+                <td>{{ ejemplar.libro }}</td>
+                <td>{{ ejemplar.estado }}</td>
+                <td>{{ ejemplar.estanteria }}</td>
+                <td>{{ ejemplar.edicion }}</td>
+                <td>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <a href="{{ path('app_ejemplar_show', {'id': ejemplar.id}) }}">Ver detalles</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            |
+                            <a href="{{ path('app_ejemplar_edit', {'id': ejemplar.id}) }}">Editar</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No se han encontrado ejemplares</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_ejemplar_new') }}">A&ntilde;adir Nuevo Ejemplar</a>
+    {% endif %}
+
+{% endblock %}

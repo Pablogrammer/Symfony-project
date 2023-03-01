@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Prestamo{% endblock %}
+
+{% block body %}
+    <h1>Crear Nuevo Pr&eacute;stamo</h1>
+    <br>
+    {{ include('prestamo/_form.html.twig') }}
+    <br>
+    <a href="{{ path('app_prestamo_index') }}">Volver</a>
+{% endblock %}

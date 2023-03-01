@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Socio{% endblock %}
+
+{% block body %}
+    <h1>Editar Socio</h1>
+    <br>
+    {{ include('socio/_form.html.twig', {'button_label': 'Actualizar'}) }}
+    <br>
+    <a href="{{ path('app_socio_index') }}">Volver</a>
+    <br><br>
+    {{ include('socio/_delete_form.html.twig') }}
+{% endblock %}

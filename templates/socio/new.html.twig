@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Socio{% endblock %}
+
+{% block body %}
+    <h1>Crear Nuevo Socio</h1>
+    <br>
+    {{ include('socio/_form.html.twig') }}
+    <br>
+    <a href="{{ path('app_socio_index') }}">Volver</a>
+{% endblock %}

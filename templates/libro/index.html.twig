@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Libro index{% endblock %}
+
+{% block body %}
+    <h1>Lista de Libros</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Editorial</th>
+                <th>Genero</th>
+                <th>NumEjemplares</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for libro in libros %}
+            <tr>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.autor }}</td>
+                <td>{{ libro.editorial }}</td>
+                <td>{{ libro.genero }}</td>
+                <td>{{ libro.numEjemplares }}</td>
+                <td>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <a href="{{ path('app_libro_show', {'id': libro.id}) }}">Ver detalles</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            |
+                            <a href="{{ path('app_libro_edit', {'id': libro.id}) }}">Editar</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No se han encontrado libros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_libro_new') }}">A&ntilde;adir Nuevo Libro</a>
+    {% endif %}
+
+{% endblock %}

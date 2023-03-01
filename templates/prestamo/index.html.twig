@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prestamo index{% endblock %}
+
+{% block body %}
+    <h1>Lista de pr&eacute;stamos</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ejemplar</th>
+                <th>FechaRetiro</th>
+                <th>FechaDevolucion</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Socio</th>
+                    <th>Acciones</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for prestamo in prestamos %}
+            <tr>
+                <td>{{ prestamo.ejemplar }}</td>
+                <td>{{ prestamo.fechaRetiro ? prestamo.fechaRetiro|date('Y-m-d') : '' }}</td>
+                <td>{{ prestamo.fechaDevolucion ? prestamo.fechaDevolucion|date('Y-m-d') : '' }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ prestamo.socio }}</td>
+                {% endif %}
+                <td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_prestamo_show', {'id': prestamo.id}) }}">Ver detalles</a>
+                        |
+                        <a href="{{ path('app_prestamo_edit', {'id': prestamo.id}) }}">Editar</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No se han encontrado pr&eacute;stamos</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_prestamo_new') }}">A&ntilde;adir Nuevo Pr&eacute;stamo</a>
+    {% endif %}
+
+{% endblock %}

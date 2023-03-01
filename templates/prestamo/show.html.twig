@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prestamo{% endblock %}
+
+{% block body %}
+    <h1>Pr&eacute;stamo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ prestamo.id }}</td>
+            </tr>
+            <tr>
+                <th>Ejemplar</th>
+                <td>{{ prestamo.ejemplar }}</td>
+            </tr>
+            <tr>
+                <th>Socio</th>
+                <td>{{ prestamo.socio }}</td>
+            </tr>
+            <tr>
+                <th>FechaRetiro</th>
+                <td>{{ prestamo.fechaRetiro ? prestamo.fechaRetiro|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaDevolucion</th>
+                <td>{{ prestamo.fechaDevolucion ? prestamo.fechaDevolucion|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_prestamo_index') }}">Volver</a>
+    <br>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_prestamo_edit', {'id': prestamo.id}) }}">Editar</a>
+        {{ include('prestamo/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}
